@@ -10,6 +10,7 @@
 , hostPlatform
 , jq
 , lib
+, otelcol
 , postgrest
 , python3
 , runtimeShell
