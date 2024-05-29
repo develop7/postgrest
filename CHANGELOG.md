@@ -31,6 +31,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
  - #3184, Log full pg version to stderr on connection - @steve-chavez
  - #3242. Add config `db-hoisted-tx-settings` to apply only hoisted function settings - @taimoorzaeem
  - #3214, #3229 Log connection pool events on log-level=debug - @steve-chavez, @laurenceisla
+ - #3560, log: add resolved host to "Listening..." messages - @develop7
 
 ### Fixed
 
