@@ -1,3 +1,4 @@
+{-# LANGUAGE LambdaCase     #-}
 {-# LANGUAGE NamedFieldPuns #-}
 
 module PostgREST.Admin
@@ -25,13 +26,15 @@ import qualified PostgREST.AppState as AppState
 import qualified PostgREST.Config   as Config
 
 
+import PostgREST.Unix (resolveHost)
 import Protolude
 
 runAdmin :: AppState -> Warp.Settings -> IO ()
 runAdmin appState settings = do
   AppConfig{configAdminServerPort} <- AppState.getConfig appState
   whenJust (AppState.getSocketAdmin appState) $ \adminSocket -> do
-    observer $ AdminStartObs configAdminServerPort
+    host <- resolveHost adminSocket
+    observer $ AdminStartObs host configAdminServerPort
     void . forkIO $ Warp.runSettingsSocket settings adminSocket adminApp
   where
     adminApp = admin appState

@@ -56,6 +56,7 @@ import qualified Data.ByteString.Char8 as BS
 import qualified Data.List             as L
 import qualified Network.HTTP.Types    as HTTP
 import qualified Network.Socket        as NS
+import           PostgREST.Unix        (resolveHost)
 import           Protolude             hiding (Handler)
 import           System.TimeIt         (timeItT)
 
@@ -82,7 +83,8 @@ run appState = do
       observer $ AppServerUnixObs path
     Nothing   -> do
       port <- NS.socketPort $ AppState.getSocketREST appState
-      observer $ AppServerPortObs port
+      host <- resolveHost $ AppState.getSocketREST appState
+      observer $ AppServerPortObs (fromJust host) port
 
   Warp.runSettingsSocket (serverSettings conf) (AppState.getSocketREST appState) app
 

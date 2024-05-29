@@ -3,6 +3,7 @@
 module PostgREST.Unix
   ( installSignalHandlers
   , createAndBindDomainSocket
+  , resolveHost
   ) where
 
 #ifndef mingw32_HOST_OS
@@ -11,7 +12,8 @@ import qualified System.Posix.Signals as Signals
 import System.Posix.Types       (FileMode)
 import System.PosixCompat.Files (setFileMode)
 
-import           Data.String      (String)
+import           Data.IP          (fromHostAddress, fromHostAddress6)
+import           Data.String      (IsString (..), String)
 import qualified Network.Socket   as NS
 import           Protolude
 import           System.Directory (removeFile)
@@ -51,3 +53,11 @@ createAndBindDomainSocket path mode = do
     handleDoesNotExist e
       | isDoesNotExistError e = return ()
       | otherwise = throwIO e
+
+resolveHost :: NS.Socket -> IO (Maybe Text)
+resolveHost sock = do
+  sn <- NS.getSocketName sock
+  case sn of
+    NS.SockAddrInet _ hostAddr ->  pure $ Just $ fromString $ show $ fromHostAddress hostAddr
+    NS.SockAddrInet6 _ _ hostAddr6 _ -> pure $ Just $ fromString $ show $ fromHostAddress6 hostAddr6
+    _ -> pure Nothing
