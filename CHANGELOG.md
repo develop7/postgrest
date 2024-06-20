@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
  - #2052, Dropped support for PostgreSQL 9.6 - @wolfgangwalther
  - #2052, Dropped support for PostgreSQL 10 - @wolfgangwalther
  - #2052, Dropped support for PostgreSQL 11 - @wolfgangwalther
+ - #3560, log: add resolved host to "Listening..." messages - @develop7
 
 ## [12.2.0] - 2024-06-11
 
@@ -31,7 +32,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
  - #3184, Log full pg version to stderr on connection - @steve-chavez
  - #3242. Add config `db-hoisted-tx-settings` to apply only hoisted function settings - @taimoorzaeem
  - #3214, #3229 Log connection pool events on log-level=debug - @steve-chavez, @laurenceisla
- - #3560, log: add resolved host to "Listening..." messages - @develop7
 
 ### Fixed
 
