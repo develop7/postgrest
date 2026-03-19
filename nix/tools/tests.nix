@@ -9,6 +9,7 @@
 , hpc-codecov
 , jq
 , lib
+, otelcol
 , postgrest
 , python3
 , runtimeShell
@@ -39,6 +40,7 @@ let
         args = [ "ARG_LEFTOVERS([hspec arguments])" ];
         workingDir = "/";
         withEnv = postgrest.env;
+        withPath = [ otelcol ];
       }
       ''
         ${withTools.withPg} -f test/observability/fixtures/load.sql \
